@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WortifuApps</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<!-- Futuristic Login Screen -->
+<div class="login-screen" id="loginScreen">
+    <div class="grid-bg"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+
+    <div class="login-container">
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+        <div class="scan-line"></div>
+        
+        <div class="login-header">
+            <h2>WortifuApps</h2>
+            <p>Masukkan kata sandi Anda</p>
+        </div>
+
+        <div class="fingerprint-icon">🔐</div>
+
+        <div class="password-display">
+            <div class="password-dots" id="passwordDots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <div class="numpad">
+            <button class="numpad-btn" data-value="1">1</button>
+            <button class="numpad-btn" data-value="2">2</button>
+            <button class="numpad-btn" data-value="3">3</button>
+            <button class="numpad-btn" data-value="4">4</button>
+            <button class="numpad-btn" data-value="5">5</button>
+            <button class="numpad-btn" data-value="6">6</button>
+            <button class="numpad-btn" data-value="7">7</button>
+            <button class="numpad-btn" data-value="8">8</button>
+            <button class="numpad-btn" data-value="9">9</button>
+            <button class="numpad-btn clear" data-value="clear">C</button>
+            <button class="numpad-btn" data-value="0">0</button>
+            <button class="numpad-btn backspace" data-value="backspace">←</button>
+            <button class="numpad-btn enter" data-value="enter">MASUK</button>
+        </div>
+
+        <div class="login-status" id="loginStatus"></div>
+    </div>
+
+    <div class="login-success" id="loginSuccess">
+        <div class="success-icon"></div>
+        <div class="success-message">Login Berhasil!</div>
+        <button class="continue-btn" id="continueBtn">Lanjutkan</button>
+    </div>
+</div>
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <div class="logo">
+            <div class="logo-icon">WA</div>
+            <div class="logo-text">wortifuapps</div>
+        </div>
+        <div class="header-actions">
+            <div class="theme-dropdown" id="themeDropdown">
+                <button class="theme-dropdown-btn" id="themeDropdownBtn">
+                    <i class="fas fa-palette" id="themeIcon"></i>
+                    <span>Theme</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="theme-dropdown-menu" id="themeDropdownMenu">
+                  <div class="theme-option active" data-theme="light">
+                      <div class="theme-preview light-theme">
+                          <div class="theme-preview-header"></div>
+                          <div class="theme-preview-body"></div>
+                      </div>
+                      <div class="theme-info">
+                          <div class="theme-name">Light</div>
+                          <div class="theme-desc">Clean & Bright</div>
+                      </div>
+                  </div>
+                  <div class="theme-option" data-theme="dark">
+                      <div class="theme-preview dark-theme">
+                          <div class="theme-preview-header"></div>
+                          <div class="theme-preview-body"></div>
+                      </div>
+                      <div class="theme-info">
+                          <div class="theme-name">Dark</div>
+                          <div class="theme-desc">Easy on Eyes</div>
+                      </div>
+                  </div>
+                  <div class="theme-option" data-theme="ocean">
+                      <div class="theme-preview ocean-theme">
+                          <div class="theme-preview-header"></div>
+                          <div class="theme-preview-body"></div>
+                      </div>
+                      <div class="theme-info">
+                          <div class="theme-name">Ocean</div>
+                          <div class="theme-desc">Calm & Serene</div>
+                      </div>
+                  </div>
+                  <div class="theme-option" data-theme="dark-blue">
+                      <div class="theme-preview dark-blue-theme">
+                          <div class="theme-preview-header"></div>
+                          <div class="theme-preview-body"></div>
+                      </div>
+                      <div class="theme-info">
+                          <div class="theme-name">Dark Blue</div>
+                          <div class="theme-desc">Deep & Professional</div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Balance Dashboard - Vertical Layout -->
+        <div class="balance-dashboard">
+            <div class="balance-card current-balance-card">
+                <div class="balance-icon-container current-balance-bg">
+                    <i class="fas fa-wallet balance-icon"></i>
+                </div>
+                <div class="balance-details">
+                    <div class="balance-title">Current Balance</div>
+                    <div class="balance-amount current-balance" id="currentBalance">Rp 0</div>
+                </div>
+            </div>
+            <div class="balance-card income-balance-card">
+                <div class="balance-icon-container income-balance-bg">
+                    <i class="fas fa-arrow-up balance-icon"></i>
+                </div>
+                <div class="balance-details">
+                    <div class="balance-title">Total Income</div>
+                    <div class="balance-amount income-balance" id="totalIncome">Rp 0</div>
+                </div>
+            </div>
+            <div class="balance-card expense-balance-card">
+                <div class="balance-icon-container expense-balance-bg">
+                    <i class="fas fa-arrow-down balance-icon"></i>
+                </div>
+                <div class="balance-details">
+                    <div class="balance-title">Total Expense</div>
+                    <div class="balance-amount expense-balance" id="totalExpense">Rp 0</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Insights Section -->
+        <div class="insights-section">
+            <h2 class="section-title">
+                <i class="fas fa-brain"></i>
+                AI Financial Insights
+            </h2>
+            
+            <div class="insights-container" id="insightsContainer">
+                <div class="insight-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Analyzing your financial data...</span>
+                </div>
+            </div>
+            
+            <div class="insights-actions">
+                <button class="insight-btn" id="refreshInsights">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh Insights
+                </button>
+                <button class="insight-btn" id="detailedAnalysis">
+                    <i class="fas fa-chart-line"></i>
+                    Detailed Analysis
+                </button>
+            </div>
+        </div>
+
+        <!-- Transaction Form -->
+        <div class="form-section">
+            <h2 class="section-title">
+                <i class="fas fa-plus-circle"></i>
+                Add Transaction
+            </h2>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label class="form-label">Transaction Type</label>
+                    <div class="transaction-type">
+                        <button type="button" class="type-btn income-btn active" data-type="income">INCOME</button>
+                        <button type="button" class="type-btn expense-btn" data-type="expense">EXPENSE</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="amount">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Amount
+                    </label>
+                    <input type="number" id="amount" class="form-control" placeholder="0" step="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="description">
+                        <i class="fas fa-edit"></i>
+                        Description
+                    </label>
+                    <input type="text" id="description" class="form-control" placeholder="Enter description" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="datetime">
+                        <i class="fas fa-calendar-alt"></i>
+                        Date & Time
+                    </label>
+                    <input type="datetime-local" id="datetime" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-save"></i>
+                    Submit Transaction
+                </button>
+            </form>
+        </div>
+
+        <!-- Weekly Transactions -->
+        <div class="weekly-transactions">
+            <div class="week-header">
+                <div class="week-title-container">
+                    <h2 class="week-title">
+                        <i class="fas fa-list-alt"></i>
+                        Recent Transactions
+                    </h2>
+                    <div class="week-range" id="weekRange"></div>
+                </div>
+                
+                <!-- Period Selector -->
+                <div class="period-selector">
+                    <button class="period-btn active" data-period="week">Week</button>
+                    <button class="period-btn" data-period="month">Month</button>
+                    <button class="period-btn" data-period="year">Year</button>
+                    <button class="period-btn" data-period="all">All</button>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="action-header-btn" id="importBtn">
+                        <i class="fas fa-file-import"></i>
+                        Import
+                    </button>
+                    <button class="action-header-btn" id="exportBtn">
+                        <i class="fas fa-file-export"></i>
+                        Export
+                    </button>
+                    <button class="action-header-btn clear-btn" id="clearAllBtn">
+                        <i class="fas fa-trash-alt"></i>
+                        Clear All
+                    </button>
+                </div>
+            </div>
+            <div id="weeklyTransactionList">
+                <div class="empty-state">
+                    <i class="fas fa-receipt"></i>
+                    <p>No transactions yet. Add your first transaction above.</p>
+                </div>
+            </div>
+            <div class="pagination" id="pagination" style="display: none;">
+                <button class="pagination-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="pagination-info" id="paginationInfo">1-5 of 0</div>
+                <button class="pagination-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Clear All Transactions
+                </h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to clear all transaction logs? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="cancelBtn">Cancel</button>
+                <button class="modal-btn modal-confirm" id="confirmBtn">Clear All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Transaction Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-trash"></i>
+                    Delete Transaction
+                </h3>
+                <button class="close-btn" id="closeDeleteModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this transaction? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="cancelDeleteBtn">Cancel</button>
+                <button class="modal-btn modal-confirm" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Transaction Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-edit"></i>
+                    Edit Transaction
+                </h3>
+                <button class="close-btn" id="closeEditModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editTransactionForm">
+                    <div class="edit-form-group">
+                        <label class="edit-form-label">Transaction Type</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="editIncome" name="transactionType" value="income" checked>
+                                <label for="editIncome" class="radio-label income-label">
+                                            <i class="fas fa-arrow-up"></i>
+                                            INCOME
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="editExpense" name="transactionType" value="expense">
+                                <label for="editExpense" class="radio-label expense-label">
+                                            <i class="fas fa-arrow-down"></i>
+                                            EXPENSE
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="editAmount">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Amount
+                        </label>
+                        <input type="number" id="editAmount" class="edit-form-control" placeholder="0" step="1" required>
+                    </div>
+                    
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="editDescription">
+                            <i class="fas fa-edit"></i>
+                            Description
+                        </label>
+                        <input type="text" id="editDescription" class="edit-form-control" placeholder="Enter description" required>
+                    </div>
+                    
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="editDatetime">
+                            <i class="fas fa-calendar-alt"></i>
+                            Date & Time
+                        </label>
+                        <input type="datetime-local" id="editDatetime" class="edit-form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="cancelEditBtn">Cancel</button>
+                <button class="modal-btn modal-confirm" id="saveEditBtn">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-file-import"></i>
+                    Import Transactions
+                </h3>
+                <button class="close-btn" id="closeImportModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="import-instructions">
+                    <h4>
+                        <i class="fas fa-info-circle"></i>
+                        CSV Format Instructions:
+                    </h4>
+                    <ul>
+                        <li>Columns: Date, Type, Amount, Description</li>
+                        <li>Date formats: DD/MM/YYYY HH:MM:SS or YYYY-MM-DDTHH:MM:SS</li>
+                        <li>Type formats: IN, OUT, income, expense</li>
+                        <li>Example: 10/09/2025 23:41:16,IN,157000,networth pertama</li>
+                    </ul>
+                </div>
+                <div class="file-input-wrapper">
+                    <input type="file" id="csvFileInput" class="file-input" accept=".csv">
+                    <label for="csvFileInput" class="file-input-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Click to select CSV file</span>
+                    </label>
+                    <div class="file-name" id="fileName"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-cancel" id="cancelImportBtn">Cancel</button>
+                <button class="modal-btn modal-confirm" id="confirmImportBtn">
+                    <i class="fas fa-file-import"></i>
+                    Import
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Actions Modal -->
+    <div class="transaction-actions-modal" id="transactionActionsModal">
+        <div class="modal-header-actions">
+            <h3 class="modal-title">
+                <i class="fas fa-cog"></i>
+                Transaction Actions
+            </h3>
+            <button class="close-btn" id="closeActionsModal">&times;</button>
+        </div>
+        <div class="modal-transaction-details">
+            <div class="modal-transaction-description" id="modalTransactionDescription"></div>
+            <div class="modal-transaction-datetime" id="modalTransactionDatetime"></div>
+            <div class="modal-transaction-amount" id="modalTransactionAmount"></div>
+        </div>
+        <div class="modal-actions-list">
+            <button class="modal-action-btn edit" id="modalEditBtn">
+                <i class="fas fa-edit"></i>
+                <span>Edit</span>
+            </button>
+            <button class="modal-action-btn delete" id="modalDeleteBtn">
+                <i class="fas fa-trash"></i>
+                <span>Delete</span>
+            </button>
+            <button class="modal-action-btn copy" id="modalCopyBtn">
+                <i class="fas fa-copy"></i>
+                <span>Copy</span>
+            </button>
+        </div>
+    </div>
+    
+     <!-- Detailed Analysis Modal -->
+    <div class="analysis-modal" id="analysisModal">
+        <div class="analysis-content">
+            <div class="analysis-header">
+                <h3 class="analysis-title">
+                    <i class="fas fa-brain"></i>
+                    Detailed Financial Analysis
+                </h3>
+                <button class="close-btn" id="closeAnalysisModal">&times;</button>
+            </div>
+            <div id="analysisContent">
+                <!-- Content will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            2025 - <a href="https://t.me/wortifu" target="_blank" class="footer-link">
+                <i class="fab fa-telegram"></i>
+                t.me/wortifu
+            </a>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
